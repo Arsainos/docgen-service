@@ -3,270 +3,225 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace docgen_service.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("[controller]")]
     [ApiController]
     public class DocumentController : Controller
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
         public DocumentController(ILogger<DocumentController> logger)
         {
 
         }
 
         /// <summary>
-        /// Получает информацию о всех клиентах в БД
+        /// Получение информации о всех доступных типах документов для генерации
         /// </summary>
         /// <remarks>
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
+        ///     GET /GetDocumentsType
         /// 
         /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
-        ///     
+        /// 
+        ///     {
+        ///         [
+        ///             {
+        ///                 DocumentType: "Профсуждение"
+        ///             },
+        ///             {
+        ///                 DocumentType: "Материальная отвественность"
+        ///             }
+        ///         ]
+        ///     }    
         /// </remarks>
         /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
+        /// <response code="200">Информация по типам документов</response>
+        /// <response code="400">Ошибка поиска информации по типам документов</response>
         [Route("GetDocumentsType")]
         [HttpGet]
         [Produces("application/json")]
-        public OkResult GetDocumentsType()
+        public IActionResult GetDocumentsType()
         {
             return Ok();
         }
 
         /// <summary>
-        /// Получает информацию о всех клиентах в БД
+        /// Получение информации о сохраненных шаблонах
         /// </summary>
         /// <remarks>
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
+        ///     GET /GetTemplatesInfo
         /// 
         /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
-        ///     
+        /// 
+        ///     {
+        ///         [
+        ///             {
+        ///                 id: 1,
+        ///                 DocumentType: "Профсуждение",
+        ///                 TemplateName: "Профсуждение.docx",
+        ///                 version: 1
+        ///             },
+        ///             {   
+        ///                 id: 2,
+        ///                 DocumentType: "Профсуждение",
+        ///                 TemplateName: "Профсуждение.docx",
+        ///                 version: 2
+        ///             },
+        ///             {
+        ///                 id: 3,
+        ///                 DocumentType: "Материальная отвественность",
+        ///                 TemplateName: "Материальная ответсвенность.docx",
+        ///                 version: 1
+        ///             }
+        ///         ]
+        ///     }    
         /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
-        [Route("GetTemplatesTypes")]
+        /// <returns>Информация о доступных шаблонах</returns>
+        /// <response code="200">Информация о шаблонах найдена</response>
+        /// <response code="400">Ошибка поиска информации о шаблонах</response>
+        [Route("GetTemplatesInfo")]
         [HttpGet]
         [Produces("application/json")]
-        public OkResult GetTemplatesTypes()
+        public IActionResult GetTemplatesInfo()
         {
             return Ok();
         }
 
         /// <summary>
-        /// Получает информацию о всех клиентах в БД
+        /// Получение конкртеного шаблона
         /// </summary>
         /// <remarks>
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
-        /// 
-        /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
-        ///     
+        ///     GET /Template/{id}
+        ///    
         /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
+        /// <returns>Скачивание файла конкретного шаблона</returns>
+        /// <response code="200">Шаблон найден</response>
+        /// <response code="400">Ошибка поиска шаблона</response>
         [Route("Template/{id}")]
         [HttpGet]
-        [Produces("application/json")]
-        public OkResult GetTemplateById()
+        [Produces("application/msword")]
+        public IActionResult GetTemplateById()
         {
             return Ok();
         }
 
         /// <summary>
-        /// Получает информацию о всех клиентах в БД
+        /// Удаление конкретного шаблона
         /// </summary>
         /// <remarks>
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
-        /// 
-        /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
-        ///     
+        ///     DELETE /Template/{id}
+        ///  
         /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
+        /// <returns>Шаблон удалён</returns>
+        /// <response code="200">Шаблон успешно удален</response>
+        /// <response code="400">Ошибка удаления шаблона</response>
         [Route("Template/{id}")]
         [HttpDelete]
         [Produces("application/json")]
-        public OkResult DeleteTemplateById()
+        public IActionResult DeleteTemplateById()
         {
             return Ok();
         }
 
         /// <summary>
-        /// Получает информацию о всех клиентах в БД
+        /// Обновление шаблона конкретной версии.
         /// </summary>
         /// <remarks>
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
+        ///     PUT /Template/{id}-{version}
         /// 
-        /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
-        ///     
         /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
-        [Route("Template/{id}")]
+        /// <returns>Шаблон обновлен</returns>
+        /// <response code="200">Обновлен шаблон</response>
+        /// <response code="400">Ошибка обновления шаблона</response>
+        [Route("Template/{id}-{version}")]
         [HttpPut]
         [Produces("application/json")]
-        public OkResult UpdateTemplateById()
+        public IActionResult UpdateTemplateById(IFormFile template)
         {
             return Ok();
         }
 
         /// <summary>
-        /// Получает информацию о всех клиентах в БД
+        /// Создание нового шаблона или инкриментальное добавление новой версии
         /// </summary>
         /// <remarks>
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
+        ///     POST /NewTemplate
+        ///     
+        ///     {
+        ///         DocumentType: "Профсуждение"
+        ///     }
         /// 
         /// Пример ответа:
         ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
+        ///     {
+        ///         id: 15,
+        ///         DocumentType: "Профсуждение",
+        ///         TemplateName: "Профсуждение.docx",
+        ///         version: 3
+        ///     }
         ///     
         /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
-        [Route("Template")]
+        /// <returns>Шаблон создан</returns>
+        /// <response code="200">Успешное создание шаблона</response>
+        /// <response code="400">Ошибка создания шаблона</response>
+        [Route("NewTemplate")]
         [HttpPost]
         [Produces("application/json")]
-        public OkResult SaveNewTemplate()
+        public IActionResult NewTemplate(IFormFile template)
         {
             return Ok();
         }
 
         /// <summary>
-        /// Получает информацию о всех клиентах в БД
+        /// Генерация документа
         /// </summary>
         /// <remarks>
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
+        ///     POST /GenerateDocument
+        ///     
+        ///     {
+        ///         DocumentType: "Профсуждение",
+        ///         version: 1,
+        ///         data: {
+        ///             field1: "Иванов",
+        ///             field2: "Иван",
+        ///             field3: "Иванович",
+        ///             filed4: "Санкт-Петербург"
+        ///         }
+        ///     }
         /// 
-        /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
-        ///     
         /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
-        [Route("CreateDocument")]
+        /// <returns>Сгенерированный документ по шаблону</returns>
+        /// <response code="200">Генерация прошла успешно</response>
+        /// <response code="400">Ошибка генерации</response>
+        [Route("GenerateDocument")]
         [HttpPost]
-        [Produces("application/json")]
-        public OkResult CreateDocument()
+        [Produces("application/msword")]
+        public IActionResult GenerateDocument()
         {
             return Ok();
         }
@@ -278,106 +233,134 @@ namespace docgen_service.Controllers
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
+        ///     POST /ConvertToPDF
+        /// 
+        /// </remarks>
+        /// <returns>Конвертированный документ в формате PDF</returns>
+        /// <response code="200">Успешная конвертация документа</response>
+        /// <response code="400">Ошибка конвертации</response>
+        [Route("ConvertToPDF")]
+        [HttpPost]
+        [Produces("application/pdf")]
+        public IActionResult ConvertToPDF(IFormFile document)
+        {
+            return Ok();
+        }
+
+        /// <summary>
+        /// Получение координат подписей
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// Пример запроса:
+        /// 
+        ///     POST /GetSignsPositions
+        ///     
+        ///     {
+        ///         SeacrhData: [
+        ///             {
+        ///                 value: "Иванов Иван Иванович"
+        ///             },
+        ///             {
+        ///                 value: "Герасимов Герман Герасимович"
+        ///             }
+        ///         ]
+        ///     }
         /// 
         /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
-        ///     
+        /// 
+        ///     {
+        ///         [
+        ///             {
+        ///                 SearchedValue: "Иванов Иван Иванович",
+        ///                 Page: 1,
+        ///                 SignZone: {
+        ///                     x: 200,
+        ///                     x1: 320,
+        ///                     y: 1000,
+        ///                     y2: 1016
+        ///                 }
+        ///             },
+        ///             {
+        ///                 SearchedValue : "Герасимов Герман Герасимович",
+        ///                 Page: 1,
+        ///                 SignZone: {
+        ///                     x: 200,
+        ///                     x1: 320,
+        ///                     y: 1200,
+        ///                     y1: 1216
+        ///                 }
+        ///             }
+        ///         ]
+        ///     }
+        ///       
         /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
+        /// <returns>Массивы подписей в документе в виде координат</returns>
+        /// <response code="200">Координаты найдены</response>
+        /// <response code="400">Ошибка поиска координаты</response>
         [Route("GetSignsPositions")]
         [HttpPost]
         [Produces("application/json")]
-        public OkResult GetSignsPositions()
+        public IActionResult GetSignsPositions(IFormFile document)
         {
             return Ok();
         }
 
         /// <summary>
-        /// Получает информацию о всех клиентах в БД
+        /// Конвертация документов и получение координат подписей
         /// </summary>
         /// <remarks>
         /// 
         /// Пример запроса:
         /// 
-        ///     GET /Clients
+        ///     POST /ConvertToPDFAndGetSignsPositions
+        ///     
+        ///     {
+        ///         SeacrhData: [
+        ///             {
+        ///                 value: "Иванов Иван Иванович"
+        ///             },
+        ///             {
+        ///                 value: "Герасимов Герман Герасимович"
+        ///             }
+        ///         ]
+        ///     }
         /// 
         /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
+        /// 
+        ///     {
+        ///         [
+        ///             {
+        ///                 SearchedValue: "Иванов Иван Иванович",
+        ///                 Page: 1,
+        ///                 SignZone: {
+        ///                     x: 200,
+        ///                     x1: 320,
+        ///                     y: 1000,
+        ///                     y2: 1016
+        ///                 }
+        ///             },
+        ///             {
+        ///                 SearchedValue : "Герасимов Герман Герасимович",
+        ///                 Page: 1,
+        ///                 SignZone: {
+        ///                     x: 200,
+        ///                     x1: 320,
+        ///                     y: 1200,
+        ///                     y1: 1216
+        ///                 }
+        ///             }
+        ///         ]
+        ///     }
         ///     
         /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
-        [Route("ConvertToPDF")]
-        [HttpPost]
-        [Produces("application/json")]
-        public OkResult ConvertToPDF()
-        {
-            return Ok();
-        }
-
-        /// <summary>
-        /// Получает информацию о всех клиентах в БД
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// Пример запроса:
-        /// 
-        ///     GET /Clients
-        /// 
-        /// Пример ответа:
-        ///     
-        ///         {
-        ///             clientId: 1,
-        ///             clientInn: 988979344,
-        ///             clientName: 'Рога и копыта',
-        ///             clientsHolding: '12 Стульев'
-        ///         },
-        ///         {
-        ///             clientId: 2,
-        ///             clientInn: 8374985793487,
-        ///             clientName: 'Напитки из Черноголовки',
-        ///             clientsHolding: 'Вкусные напитки'
-        ///         },
-        ///         ...
-        ///     
-        /// </remarks>
-        /// <returns>Информация по всем клиентам</returns>
-        /// <response code="200">Найдена информация по клиентам</response>
-        /// <response code="400">Клиенты не найдены</response>
+        /// <returns>Массивы подписей в документе в виде координат</returns>
+        /// <response code="200">Успешная конвертация</response>
+        /// <response code="400">Ошибка конвертации</response>
         [Route("ConvertToPDFAndGetSignsPositions")]
         [HttpPost]
         [Produces("application/json")]
-        public OkResult ConvertToPDFAndGetSignsPositions()
+        public IActionResult ConvertToPDFAndGetSignsPositions(IFormFile document)
         {
             return Ok();
         }
