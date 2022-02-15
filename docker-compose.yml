@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  docgen-service:
+    build:
+      dockerfile: ./docgen-service/Dockerfile
+    expose: 
+      - "80"
+    ports:
+      - "49000:80"
