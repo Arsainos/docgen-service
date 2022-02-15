@@ -1,23 +1,53 @@
-var builder = WebApplication.CreateBuilder(args);
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using docgen_service.Configurations;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace docgen_service
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public class Program
+    {
+        public static int Main(string[] args)
+        {
+            var configuration = GetConfiguration();
+            try
+            {
+                var host = BuildWebHost(configuration, args);
+
+                host.Run();
+
+                return 0;
+            }
+            catch
+            {
+                return 1;
+            }
+        }
+
+        public static IWebHost BuildWebHost(IConfiguration configuration, string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .CaptureStartupErrors(true)
+                .ConfigureAppConfiguration(x => x.AddConfiguration(configuration))
+                .UseStartup<Startup>()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .Build();
+
+        private static IConfiguration GetConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            return builder.Build();
+        }    
+    }
 }
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
