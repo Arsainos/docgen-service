@@ -54,13 +54,7 @@ namespace docgen_service.Controllers
         [HttpGet]
         [Produces("application/json")]
         public IActionResult GetDocumentsType()
-        {
-            DocumentType dt = new DocumentType() { Id = 1, Name = "Azaza", Description = "something" };
-
-            // добавляем их в бд
-            _dataContext.DocumentsType.Add(dt);
-            _dataContext.SaveChanges();
-
+        {            
             return Ok();
         }
 
