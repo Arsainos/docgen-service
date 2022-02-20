@@ -37,7 +37,7 @@ namespace docgen_service.Database.GenericRepository
         public void Remove(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
-            _dbContext.Entry(entity).State = = EntityState.Deleted;
+            _dbContext.Entry(entity).State = EntityState.Deleted;
         }
 
         public void Remove(IEnumerable<TEntity> entities)
