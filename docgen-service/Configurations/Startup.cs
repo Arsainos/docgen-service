@@ -1,5 +1,6 @@
 ﻿using docgen_service.Configurations.AppSettings;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace docgen_service.Configurations
@@ -116,6 +117,21 @@ namespace docgen_service.Configurations
             services.Configure<Logging>(configuration.GetSection("Logging"));
             services.Configure<DataBase>(configuration.GetSection("DataBase"));
 
+            return services;
+        }
+
+        public static IServiceCollection ConfigureTransientServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            return services;
+        }
+
+        public static IServiceCollection ConfifureScopedServices(this IServiceCollection services, IConfiguration configuration)
+        {
+            return services
+        }
+
+        public static IServiceCollection ConfigureSingletonServices(this IServiceCollection services, IConfiguration configuration)
+        {
             return services;
         }
     }
