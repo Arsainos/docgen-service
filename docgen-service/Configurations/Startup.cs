@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.HttpOverrides;
+﻿using docgen_service.Configurations.AppSettings;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.OpenApi.Models;
 
 namespace docgen_service.Configurations
@@ -106,6 +107,14 @@ namespace docgen_service.Configurations
 
                 c.IncludeXmlComments(basePath + "docgen-service.xml");
             });
+
+            return services;
+        }
+
+        public static IServiceCollection ConfigureAppSettings(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<Logging>(configuration.GetSection("Logging"));
+            services.Configure<DataBase>(configuration.GetSection("DataBase"));
 
             return services;
         }
