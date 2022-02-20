@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.Options;
+﻿using docgen_service.Database;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 
 namespace docgen_service.Configurations
 {
@@ -31,7 +32,18 @@ namespace docgen_service.Configurations
             services.ConfigureScopedServices(Configuration);
             services.ConfigureSingletonServices(Configuration);
             services.AddEndpointsApiExplorer();
-        }
+
+            services.AddDbContext<DataContext>
+                (
+                    options => options.UseNpgsql(
+                        $"Host={Configuration.GetValue<string>("DataBase:Host")};" +
+                        $"Port={Configuration.GetValue<string>("DataBase:Port")};" +
+                        $"Database={Configuration.GetValue<string>("DataBase:Database")};" +
+                        $"Username={Configuration.GetValue<string>("DataBase:Username")};" +
+                        $"Password={Configuration.GetValue<string>("DataBase:Password")};"
+                        )
+                );
+        }   
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

@@ -1,22 +1,31 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using docgen_service.Configurations.AppSettings;
+using docgen_service.Database.Configuration;
+using docgen_service.Database.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace docgen_service.Database
 {
     public class DataContext : DbContext
     {
-        public DataContext()
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.EnsureCreated();           
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DataContext()
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5433;Database=codgen;Username=codgen;Password=ocwh7wfth5");
+
         }
+        
+        public DbSet<DocumentType> DocumentsType { get; set; }
+ 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new DocumentTypesConfiguration());
 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

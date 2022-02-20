@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using docgen_service.Configurations.AppSettings;
+using docgen_service.Database;
+using docgen_service.Database.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace docgen_service.Controllers
 {
@@ -10,13 +14,15 @@ namespace docgen_service.Controllers
     [ApiController]
     public class DocumentController : Controller
     {
+        private readonly DataContext _dataContext;
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="logger"></param>
-        public DocumentController(ILogger<DocumentController> logger)
+        public DocumentController(ILogger<DocumentController> logger, DataContext context)
         {
-
+            _dataContext = context;
         }
 
         /// <summary>
@@ -49,6 +55,12 @@ namespace docgen_service.Controllers
         [Produces("application/json")]
         public IActionResult GetDocumentsType()
         {
+            DocumentType dt = new DocumentType() { Id = 1, Name = "Azaza", Description = "something" };
+
+            // добавляем их в бд
+            _dataContext.DocumentsType.Add(dt);
+            _dataContext.SaveChanges();
+
             return Ok();
         }
 
