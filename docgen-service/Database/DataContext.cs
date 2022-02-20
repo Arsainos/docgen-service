@@ -11,7 +11,7 @@ namespace docgen_service.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5433;Database=codgen;Username=codgen;Password=ocwh7wfth5");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
