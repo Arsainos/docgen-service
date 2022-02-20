@@ -28,6 +28,10 @@ namespace docgen_service.Configurations
 
             services.AddControllers();
             services.AddSwagger(Configuration);
+            services.ConfigureAppSettings(Configuration);
+            services.ConfigureTransientServices(Configuration);
+            services.ConfigureScopedServices(Configuration);
+            services.ConfigureSingletonServices(Configuration);
             services.AddEndpointsApiExplorer();
         }
 
@@ -125,9 +129,9 @@ namespace docgen_service.Configurations
             return services;
         }
 
-        public static IServiceCollection ConfifureScopedServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureScopedServices(this IServiceCollection services, IConfiguration configuration)
         {
-            return services
+            return services;
         }
 
         public static IServiceCollection ConfigureSingletonServices(this IServiceCollection services, IConfiguration configuration)
