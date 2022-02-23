@@ -42,6 +42,7 @@ namespace docgen_service.Configurations
                         $"Username={Configuration.GetValue<string>("DataBase:Username")};" +
                         $"Password={Configuration.GetValue<string>("DataBase:Password")};"
                         )
+                    .UseLazyLoadingProxies()
                 );
         }   
 

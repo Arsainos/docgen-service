@@ -11,6 +11,7 @@ namespace docgen_service.Database
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();           
         }
 
@@ -20,13 +21,16 @@ namespace docgen_service.Database
         }
         
         public DbSet<DocumentType> DocumentsType { get; set; }
+        public DbSet<Template> Templates { get; set; }
  
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new DocumentTypesConfiguration());
+            modelBuilder.ApplyConfiguration(new TemplateConfiguration());
 
             modelBuilder.Entity<DocumentType>().HasData(new DocumentsTypeData().GetDocumentsTypeData());
+            modelBuilder.Entity<Template>().HasData(new TemplateData().GetData());
 
             base.OnModelCreating(modelBuilder);
         }
