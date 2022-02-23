@@ -11,7 +11,6 @@ namespace docgen_service.Database
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            //Database.EnsureDeleted();
             Database.EnsureCreated();           
         }
 
