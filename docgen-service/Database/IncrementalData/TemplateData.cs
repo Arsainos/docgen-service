@@ -1,8 +1,9 @@
 ﻿using docgen_service.Database.Entities;
+using docgen_service.Database.Interfaces;
 
 namespace docgen_service.Database.IncrementalData
 {
-    public class TemplateData
+    public class TemplateData : IIncrementalData<Template>
     {
         public Template[] GetData()
         {

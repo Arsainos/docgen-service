@@ -2,6 +2,7 @@
 using docgen_service.Database.Configuration;
 using docgen_service.Database.Entities;
 using docgen_service.Database.IncrementalData;
+using docgen_service.Database.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -28,8 +29,8 @@ namespace docgen_service.Database
             modelBuilder.ApplyConfiguration(new DocumentTypesConfiguration());
             modelBuilder.ApplyConfiguration(new TemplateConfiguration());
 
-            modelBuilder.Entity<DocumentType>().HasData(new DocumentsTypeData().GetDocumentsTypeData());
-            modelBuilder.Entity<Template>().HasData(new TemplateData().GetData());
+            modelBuilder.Entity<DocumentType>().HasData(new DocumentsTypeData().GetData());
+            modelBuilder.Entity<Template>().HasData(new TemplateData().GetData());            
 
             base.OnModelCreating(modelBuilder);
         }
